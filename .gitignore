@@ -4,6 +4,11 @@
 /node_modules
 /.pnp
 .pnp.js
+/Backendserver/node_modules
+/Backendserver/apikey.txt
+/Backendserver/message.js
+/Backendserver/newm.js
+/Backendserver/tste.js
 
 # testing
 /coverage
