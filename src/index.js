@@ -4,11 +4,12 @@ import './index.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
-import Dash from './components/Dash';
+
+import App from './App';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-   <Dash/>
+<App/>
  
   </React.StrictMode>
 );

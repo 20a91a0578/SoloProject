@@ -1,13 +1,24 @@
 import './App.css';
-
+import { BrowserRouter,Routes,Route } from 'react-router-dom';
+import Header from './Header';
+import Remove from './components/Remove';
+import AddUpdate from './components/AddUpdate';
+import Attendance from './components/Attendance';
+import Footer from './Footer';
+import Dash from './components/Dash';
 function App() {
   return (
     <>
-  <div className='row'>
-    <div className='col-md-2 offset-md-8'>
-      <button className='btn btn-success'>Click</button>
-    </div>
-  </div>
+ <BrowserRouter>
+ <Header/>
+ <Routes>
+  <Route path='/' element={<Dash/>}/>
+  <Route path='/attendance' element={<Attendance/>}/>
+  <Route path='/addupdate' element={<AddUpdate/>}/>
+  <Route path='/remove' element={<Remove/>}/>
+ </Routes>
+ <Footer/>
+ </BrowserRouter>
     </>
   );
 }
