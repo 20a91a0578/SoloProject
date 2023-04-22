@@ -13,7 +13,7 @@ username:"Rajesh"
         <p style={{ margin: '0', marginRight: '10px' }}>Welcome, {props.username}!</p>
         <nav style={{ display: 'inline-block' }}>
             <ul style={{ listStyleType: 'none', margin: '0', padding: '0' }}>
-                <li style={{ display: 'inline-block', marginRight: '10px' }}>DashBoard</li>
+                <li style={{ display: 'inline-block', marginRight: '10px' }}><Link to='/dashboard'>DashBoard</Link></li>
                 <li style={{ display: 'inline-block', marginRight: '10px' }}><Link to='/attendance'>Attendance</Link></li>
                 <li style={{ display: 'inline-block', marginRight: '10px' }}><Link to='/addupdate'>Student_details</Link></li>
                 <li style={{ display: 'inline-block' }}><Link to='/remove'>Remove</Link></li>

@@ -13,9 +13,11 @@ function App() {
  <Header/>
  <Routes>
   <Route path='/' element={<Dash/>}/>
+  <Route path='/dashboard' element={<Dash/>}/>
   <Route path='/attendance' element={<Attendance/>}/>
   <Route path='/addupdate' element={<AddUpdate/>}/>
   <Route path='/remove' element={<Remove/>}/>
+
  </Routes>
  <Footer/>
  </BrowserRouter>

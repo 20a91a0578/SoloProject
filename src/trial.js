@@ -1,7 +1,7 @@
-import React from 'react';
-import { useState } from 'react';
-function AddUpdate() {
-  const [formData, setFormData] = useState({
+import React, { useState } from 'react';
+
+function Form1() {
+	const [formData, setFormData] = useState({
 		name: '',
 		rollnumber: '',
 		email: '',
@@ -89,10 +89,11 @@ function AddUpdate() {
 			</label>
 			<textarea id="address" name="address" required value={formData.address} onChange={handleChange} style={{ padding: '8px', fontSize: '16px', borderRadius: '5px', border: '1px solid #ccc', width: '100%', boxSizing: 'border-box', marginTop: '8px', marginBottom: '16px' }}></textarea>
 
-			<button type="submit" style={{ padding: '8px', fontSize: '16px', borderRadius: '5px', border: 'none', backgroundColor: '#4CAF50', color: 'white', width: '100%', cursor: 'pointer', marginTop: '16px', marginBottom: '8px' }}>Add/Update</button>
+			<button type="submit" style={{ padding: '8px', fontSize: '16px', borderRadius: '5px', border: 'none', backgroundColor: '#4CAF50', color: 'white', width: '100%', cursor: 'pointer', marginTop: '16px', marginBottom: '8px' }}>Submit</button>
 </form>
 </div>
 );
 }
 
-export default AddUpdate
+export default Form1;
+
