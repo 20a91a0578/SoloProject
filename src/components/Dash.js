@@ -1,6 +1,34 @@
 import React from 'react';
-import Table from 'react-bootstrap/Table';
+import { useState,useEffect } from 'react';
+import { Table } from 'react-bootstrap';
+function Rows(props){
+  return(
+    <>
+    <tr>
+      <td>{props.sno}</td>
+      <td>{props.name}</td>
+      <td>{props.rollnumber}</td>
+      <td>{props.email}</td>
+      <td>{props.branch}</td>
+      <td>{props.college}</td>
+    </tr>
+    </>
+  )
+}
 function Dash() {
+  const dates=new Date();
+  console.log(dates)
+  const [students,setStudents]=useState([]);
+  const getStudents=async()=>{
+    const result=await fetch('http://localhost:8009/getabsents',{
+      method:"GET"
+    })
+    const res=await result.json();
+    setStudents(res);
+  }
+  useEffect(()=>{
+    getStudents()
+  },[])
   return (
  <>
 
@@ -30,7 +58,8 @@ function Dash() {
                 </tr>
                 </thead>
                 <tbody>
-  
+                {students.map((ele,i)=>{return(<Rows sno={i+1} name={ele.name} rollnumber={ele.rollnumber} email={ele.email} branch={ele.branch} college={ele.college}/>)})}
+                 
                  </tbody>
              
               </Table>

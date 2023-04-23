@@ -5,13 +5,13 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
 
-  // import App from './App';
-import Udash from './components/Udash';
+  import App from './App';
+// import Udash from './components/Udash';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-{/* <App/> */}
-<Udash/>
+<App/>
+{/* <Udash/> */}
   </React.StrictMode>
 );
 

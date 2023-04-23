@@ -18,14 +18,21 @@ function AddUpdate() {
 		setFormData({ ...formData, [event.target.name]: event.target.value });
 	};
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async(event) => {
 		event.preventDefault();
-		console.log(formData);
+		const result=await fetch('http://localhost:8009/addupdate',{
+			method:'POST',
+			body:JSON.stringify(formData),
+			headers:{
+				"Content-Type":"application/json"
+			}
+		})
+		console.log(result);
 	};
 
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'Arial, sans-serif' }}>
-			<h1>Student Information Form</h1>
+			<h1>Add Student Information Form</h1>
 			<form style={{ maxWidth: '500px', width: '100%' }} onSubmit={handleSubmit}>
 				<label htmlFor="name" style={{ marginTop: '20px', fontSize: '18px', fontWeight: 'bold' }}>
 					Name:

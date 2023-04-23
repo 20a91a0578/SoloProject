@@ -1,9 +1,15 @@
-import React from 'react'
+import React from 'react';
+import { Table } from 'react-bootstrap';
 import { FaMapMarkerAlt,FaFacebookF,FaInstagramSquare,FaTwitter} from 'react-icons/fa';
 function Udash() {
   const props={
     username:'rajesh'
   }
+  const date = new Date();
+const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+const formatter = new Intl.DateTimeFormat('en-US', options);
+const formattedDate = formatter.format(date);
+console.log(formattedDate);
   return (
    <>
    <div style={{ backgroundColor: '#495788', color: 'white', justifyContent: 'space-between', alignItems: 'center', padding: '10px' }}>
@@ -23,21 +29,32 @@ function Udash() {
   
 <center><h2><b>Details:</b></h2></center><br/><br/><br/>
  <div className='row' style={{boxShadow:'5px 5px 4px'}}>
- <div className='col-md-4 offset-md-2' >
-  <h3>Name:{props.username}</h3>
-  <h3>Email:</h3>
-  <h3>DOB:</h3>
-  <h3>YEAR:</h3>
-  <h3>Branch</h3>
-  <h3>Address</h3>
+ <div className='col-md-4 offset-md-1' >
+  <Table responsive>
+    <thead></thead>
+    <tbody>
+      <tr><td><h4>Name :  {props.username}</h4></td></tr>
+      <tr><td><h4>Email : </h4></td></tr>
+      <tr><td><h4>DOB : </h4></td></tr>
+      <tr><td><h4>Year of Study : </h4></td></tr>
+      <tr><td><h4>Branch : </h4></td></tr>
+      <tr><td><h4>Address : </h4></td></tr>
+    </tbody>
+  </Table>
+
   </div>
   <div className='col-md-5 offset-md-1'>
-    <h3>Roll Number:</h3>
-    <h3>Mobile:</h3>
-    <h3>CGPA:</h3>
-    <h3>Backlog:</h3>
-    <h3>College</h3>
-    <h3>Remarks:</h3>
+  <Table responsive>
+    <thead></thead>
+    <tbody>
+      <tr><td><h4>Roll Number : </h4></td></tr>
+      <tr><td><h4>Mobile :  </h4></td></tr>
+      <tr><td><h4>CGPA : </h4></td></tr>
+      <tr><td><h4>Backlogs : </h4></td></tr>
+      <tr><td><h4>College : </h4></td></tr>
+      <tr><td><h4>Remarks : </h4></td></tr>
+    </tbody>
+  </Table>
   </div>
   &nbsp;
  </div>
