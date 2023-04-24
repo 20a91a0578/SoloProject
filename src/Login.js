@@ -1,9 +1,10 @@
 import React from 'react'
 import {useState } from 'react';
 import { useEffect } from 'react';
-import Dash from './components/Dash';
 import Udash from './components/Udash';
+import App from './App';
 function Login() {
+
     const labelStyle = {
         display: "block",
         marginBottom: "5px",
@@ -95,7 +96,8 @@ function Login() {
   
     if (isAdminLoggedIn) {
       // If the user is logged in, render the authenticated content
-      return (<Dash username={loginname} roll={roll}/>);
+     
+      return (<App username={loginname} roll={roll}/>);
     }
     else if(isUserLoggedIn){
       

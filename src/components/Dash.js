@@ -15,10 +15,20 @@ function Rows(props){
     </>
   )
 }
-function Dash() {
+function Dash(props) {
   const dates=new Date();
   console.log(dates)
   const [students,setStudents]=useState([]);
+  const [total,settotal]=useState('');
+  const [present,setpresent]=useState('');
+  const getCount=async()=>{
+const result=await fetch('http://localhost:8009/count',{
+  method:"GET"
+})
+const cou=await result.json();
+settotal(cou.total)
+setpresent(cou.presents)
+  }
   const getStudents=async()=>{
     const result=await fetch('http://localhost:8009/getabsents',{
       method:"GET"
@@ -27,7 +37,9 @@ function Dash() {
     setStudents(res);
   }
   useEffect(()=>{
+    getCount()
     getStudents()
+   
   },[])
   return (
  <>
@@ -37,8 +49,8 @@ function Dash() {
       <div className='col-md-10' style={{width:'86vw',marginLeft:'8%'}}>
         <div className='row' style={{marginTop:'1%',boxShadow:'5px 5px 4px' ,border:'1px solid black'}}>
           
-          <div className='col-md-2'><h3 style={{paddingLeft:'1%',marginTop:'7%'}}>Total :&nbsp;</h3></div>
-          <div className='col-md-2 offset-md-8' style={{paddingRight:'1%'}}><h3 style={{marginTop:'7%'}}>Today's Count: &nbsp;</h3></div>
+          <div className='col-md-2'><h3 style={{paddingLeft:'1%',marginTop:'7%'}}>Total :&nbsp;{total}</h3></div>
+          <div className='col-md-2 offset-md-8' style={{paddingRight:'1%'}}><h3 style={{marginTop:'7%'}}>Today: {present}</h3></div>
         </div>
       </div>
       <div className='cold-md-12'  style={{marginTop:'1%',boxShadow:'5px 5px 4px',width:'93vw',marginLeft:'4%',border:'1px solid black'}}>
@@ -70,6 +82,7 @@ function Dash() {
       </div>
      </div>
     </div>
+  
  </>
   )
 }

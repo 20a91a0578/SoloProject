@@ -11,7 +11,8 @@ function AddUpdate() {
 		cgpa: '',
 		dob: '',
 		academicyear: '',
-		address: ''
+		address: '',
+		mobile:''
 	});
 
 	const handleChange = (event) => {
@@ -48,6 +49,10 @@ function AddUpdate() {
 					Email:
 				</label>
 				<input type="text" id="email" name="email" required value={formData.email} onChange={handleChange} style={{ padding: '8px', fontSize: '16px', borderRadius: '5px', border: '1px solid #ccc', width: '100%', boxSizing: 'border-box', marginTop: '8px', marginBottom: '16px' }} />
+				<label htmlFor="name" style={{ marginTop: '20px', fontSize: '18px', fontWeight: 'bold' }}>
+					Mobile:
+				</label>
+				<input type="text" id="name" name="mobile" required value={formData.mobile} onChange={handleChange} style={{ padding: '8px', fontSize: '16px', borderRadius: '5px', border: '1px solid #ccc', width: '100%', boxSizing: 'border-box', marginTop: '8px', marginBottom: '16px' }} />
 
 				<label htmlFor="branch" style={{ fontSize: '18px', fontWeight: 'bold' }}>
 					Branch:

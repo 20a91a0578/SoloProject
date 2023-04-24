@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-function Header() {
-    const props={
-username:"Rajesh"
-    }
+import { FiLogOut } from "react-icons/fi";
+function Header(props) {
+  function reload(){
+    window.location.reload();
+  }
   return (
    <>
    <div style={{ backgroundColor: '#495788', color: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px' }}>
@@ -17,6 +18,7 @@ username:"Rajesh"
                 <li style={{ display: 'inline-block', marginRight: '10px' }}><Link to='/attendance'>Attendance</Link></li>
                 <li style={{ display: 'inline-block', marginRight: '10px' }}><Link to='/addupdate'>Student_details</Link></li>
                 <li style={{ display: 'inline-block' }}><Link to='/remove'>Remove</Link></li>
+                <li style={{ display: 'inline-block', marginLeft: '10px' }}><button onClick={reload} style={{backgroundColor:"#495788",border:'0px solid #495788',color:'white'}}><FiLogOut/></button></li>
             </ul>
         </nav>
     </div>

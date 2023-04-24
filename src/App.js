@@ -6,17 +6,19 @@ import AddUpdate from './components/AddUpdate';
 import Attendance from './components/Attendance';
 import Footer from './Footer';
 import Dash from './components/Dash';
-function App() {
+// import Login from './Login';
+function App(props) {
   return (
     <>
  <BrowserRouter>
- <Header/>
+ <Header username={props.username}/>
  <Routes>
-  <Route path='/' element={<Dash/>}/>
+  <Route path='/' element={<Dash />}/>
   <Route path='/dashboard' element={<Dash/>}/>
   <Route path='/attendance' element={<Attendance/>}/>
   <Route path='/addupdate' element={<AddUpdate/>}/>
   <Route path='/remove' element={<Remove/>}/>
+  
 
  </Routes>
  <Footer/>
