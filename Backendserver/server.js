@@ -15,40 +15,55 @@ data.find({role:'student'}).then((result)=>{
     students=result;
    
 })
+//logins
+server.get('/',(req,res)=>{
+    let data=db.get('Logins');
+    data.find({}).then((result)=>{
+        res.send(result);
+    })
+})
 
+//to get count
 
-// server.get('/',(req,res)=>{
-//     let data=db.get('Data');
-//    data.insert([{rollno:'20a91a0578'},{rollno:'20a91a0569'},{rollno:'20a91a0580'},{rollno:'20a91a0596'}])
-//   data.find({role:{$ne:null}}).then((result)=>{
-//     res.send(result)
-// data.remove({status:'Absent'}).then((res1)=>res.send(res1));
-//     });
+server.get('/count',(req,res)=>{
+    const date=new  Date();
+    const data=db.get('Data');
+    data.find({date:date.toLocaleDateString(),status:'Present'}).then((result)=>{
+        res.send({total:students.length,presents:result.length})
+    })
+})
 
-// })
+//to get final absents list
+server.get('/finalabsent',(req,res)=>{
+    const data=db.get('Data');
+    let date=new Date().toLocaleDateString();
+    data.find({date:date,status:"Absent"}).then((result)=>{
+        res.send(result);
+    })
+})
 
 //to get absentees details
 server.get('/getabsents',(req,res)=>{
-    const collection=db.get('Data');
-   
-    // var absents=new Array();
-    // collection.find({date:new Date(),role:'student'}).then((result)=>{
-    //     absents.push(result);
-    // })
-    // console.log(absents)
-    // if(absents.length===0){
-    //     console.log('intial')
-    //     students.forEach(element => {
-    //         collection.insert({date:new Date(),name:element.name,rollnumber:element.rollnumber,email:element.email,branch:element.branch,college:element.college,status:'Absent'})
-    //     });
-    // }
-    // else{
-    //     console.log('alerady done')
-    // }
-    collection.find({date:new Date(),role:'student'}).then((result)=>{
-        res.send(result);
-    })
-    
+    const date = new Date()
+    let d=db.get('Data');
+    d.find({date:date.toLocaleDateString()}).then((result)=>{
+        if(result.length===0)
+        {
+            students.forEach(element => {
+                d.insert({date:date.toLocaleDateString(),name:element.name,rollnumber:element.rollnumber,email:element.email,branch:element.branch,college:element.college,status:'Absent'})
+            });
+            d.find({date:date.toLocaleDateString(),status:'Absent'}).then((res1)=>{
+                res.send(res1);
+            })
+        }
+        else
+        {
+            d.find({date:date.toLocaleDateString(),status:'Absent'}).then((res1)=>{
+                res.send(res1);
+            })
+        }
+       
+    })  
 })
 
 //to add the students into the database
@@ -72,22 +87,36 @@ server.post('/deleteStudents',(req,res)=>{
     })
 })
 
-// server.get('/students',(req,res)=>{
-//     let data=db.get('Data');
-//     students.forEach(element => {
-//        data.insert({date:new Date(),rollno:element.rollno,status:'Absent'}); 
-//     });
-// data.find({role:null,date: { $ne: null }}).then((result)=>{
-//     res.send(result);
-// })
-// server.post('/postAttendace',(req,res)=>{
-//     const collection = db.get('Data');
-//     const filter = { date:new Date(req.body.date), rollno:req.body.rollno };
-//     const update = { $set: {status:'Present'} };
-//     collection.updateOne(filter, update);
-// })
+//to post Attendance
+server.get('/details/:id',(req,res)=>{
+    const date=new Date();
+    console.log(req.params.id)
+    const collection = db.get('Data');
+    const filter = { date:date.toLocaleDateString(), rollnumber:req.params.id };
+    const update = { $set: {status:'Present'} };
+    collection.update(filter, update).then((result)=>{
+        collection.find({date:date.toLocaleDateString(),rollnumber:req.params.id,status:'Present'}).then((result)=>{
+            res.send(result);
+        })
+    });
+   
+}) 
 
-// })
+//to get specific user deatils 
+server.get('/user/:id',(req,res)=>{
+    const data=db.get('Data');
+    data.find({rollnumber:req.params.id,role:'student'}).then((result)=>{
+        res.send(result)
+    })
+})
+
+//to get user status
+server.get('/userstat/:id',(req,res)=>{
+    const data=db.get('Data');
+    data.find({rollnumber:req.params.id,date:{$ne:null}}).then((result)=>{
+        res.send(result);
+    })
+})
 
 server.listen(8009,()=>{
     console.log(`server is runnig on the port number ${port} ....`);
