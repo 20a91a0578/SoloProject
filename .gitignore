@@ -9,7 +9,7 @@
 /Backendserver/message.js
 /Backendserver/newm.js
 /Backendserver/tste.js
-/Backendserver/.env
+
 
 # testing
 /coverage
@@ -23,7 +23,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
-
+.env.Mongourl
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
