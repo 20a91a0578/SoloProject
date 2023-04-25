@@ -9,7 +9,7 @@
 /Backendserver/message.js
 /Backendserver/newm.js
 /Backendserver/tste.js
-
+/Backendserver/.env
 
 # testing
 /coverage
