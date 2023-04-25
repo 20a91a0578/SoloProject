@@ -1,8 +1,11 @@
 import React from 'react'
 import {useState } from 'react';
 import { useEffect } from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import Udash from './components/Udash';
 import App from './App';
+import './index.css';
 function Login() {
 
     const labelStyle = {
@@ -38,6 +41,35 @@ function Login() {
     const [users, setUsers] = useState([]);
     const [loginname,setlogin]=useState("");
     const [roll,setRoll]=useState("");
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    // function reload(){
+    //   window.location.reload();
+    // }
+    const [formData, setFormData] = useState({
+    email:'' 
+    });
+  
+    const handleChange = (event) => {
+      setFormData({ [event.target.name]: event.target.value });
+    };
+  
+    const handleSubmit = async() => {
+     document.getElementById("error1").innerHTML="if you don't find your mail in the inbox.Please check it in junk/spam mails." ;
+     setTimeout(handleClose,4000);
+  const respon= await fetch('http://localhost:8009/sendpassword',{
+    method:'POST',
+    body:JSON.stringify(formData),
+    headers:{
+      "Content-Type":"application/json"
+    }
+  });
+
+  console.log(respon);
+  
+    };
     const handelUsername = (e) => {
       setUsername(e.target.value);
     }
@@ -106,8 +138,8 @@ function Login() {
     else {
       // If the user is not logged in, render the login form
       return (
-        <>
-<div className='row'>
+      
+<div className='row login'>
     <div className='col-md-6 offset-md-3'>
        
     <div style={formContainer}>
@@ -138,7 +170,30 @@ function Login() {
               style={inputStyle}
             />
           </div><br/>
+          <div className='row' style={{marginTop:'1%'}}>
+      <div  className='col-md-'>
        
+        <Button style={{color:'blue',backgroundColor:'white',border:'0px solid white'}} onClick={handleShow}>Forgot Password ?</Button>
+     <Modal show={show} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Enter you mail to change password </Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                   
+        <form style={{ maxWidth: '500px', width: '100%' }} onSubmit={handleSubmit}>
+        <p id='error1' style={{color:'red'}}></p>
+				<label htmlFor="name" style={{  fontSize: '18px', fontWeight: 'bold' }}>Email : </label>
+				<input type="text" id="name" name="email" required value={formData.password} onChange={handleChange} style={{ padding: '8px', fontSize: '16px', borderRadius: '5px', border: '1px solid #ccc', width: '100%', boxSizing: 'border-box', marginTop: '8px', marginBottom: '16px' }} />
+			</form>
+                  </Modal.Body>
+                  <Modal.Footer>
+                   
+                    <Button variant="danger" onClick={()=>{handleSubmit();}}>Submit</Button>
+                  </Modal.Footer>
+                </Modal>
+ 
+      </div>
+     </div>
         <center>
         <button type="submit" className="btn btn-success" style={{ padding: "10px 20px" }}>
   Submit
@@ -148,7 +203,7 @@ function Login() {
         </div>
     </div>
 </div>
-        </>
+      
       );
     }
   }

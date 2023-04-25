@@ -6,3 +6,9 @@
     overflow-x: scroll;
     height: 45vh;
   }
+  
+  .login{
+    background-image: 'url(./components/college.jpg)';
+    background-repeat:'no-repeat';
+    background-size: 'cover';
+  }

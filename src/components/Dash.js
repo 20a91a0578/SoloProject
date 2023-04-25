@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState,useEffect } from 'react';
 import { Table } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 function Rows(props){
   return(
     <>
@@ -15,9 +17,41 @@ function Rows(props){
     </>
   )
 }
-function Dash(props) {
-  const dates=new Date();
-  console.log(dates)
+function Dash() {
+  const props={
+    username:"RajeshEevana"
+  }
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  // function reload(){
+  //   window.location.reload();
+  // }
+  const [formData, setFormData] = useState({
+    username:props.username,
+		password: '',
+		cpassword: '',
+		
+	});
+
+	const handleChange = (event) => {
+		setFormData({ ...formData, [event.target.name]: event.target.value });
+	};
+
+	const handleSubmit = async() => {
+    handleClose();
+const respon= await fetch('http://localhost:8009/updatepassword',{
+  method:'POST',
+  body:JSON.stringify(formData),
+  headers:{
+    "Content-Type":"application/json"
+  }
+});
+console.log(respon);
+
+	};
+  
   const [students,setStudents]=useState([]);
   const [total,settotal]=useState('');
   const [present,setpresent]=useState('');
@@ -45,6 +79,51 @@ setpresent(cou.presents)
  <>
 
     <div>
+    <div className='row' style={{marginTop:'1%'}}>
+      <div  className='col-md-2 offset-md-10'>
+       
+        <Button variant="danger" style={{float:'right',fontSize:'15px'}} onClick={handleShow}>Change Password</Button>
+     <Modal show={show} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Change Password</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p id='error' style={{color:'red'}}></p>
+        <form style={{ maxWidth: '500px', width: '100%' }} onSubmit={handleSubmit}>
+				<label htmlFor="name" style={{ marginTop: '20px', fontSize: '18px', fontWeight: 'bold' }}>
+					New Password:
+				</label>
+				<input type="text" id="name" name="password" required value={formData.password} onChange={handleChange} style={{ padding: '8px', fontSize: '16px', borderRadius: '5px', border: '1px solid #ccc', width: '100%', boxSizing: 'border-box', marginTop: '8px', marginBottom: '16px' }} />
+
+				<label htmlFor="rollnumber" style={{ fontSize: '18px', fontWeight: 'bold' }}>
+				Confirm Password :
+				</label>
+				<input type="text" id="rollnumber" name="cpassword" required value={formData.cpassword} onChange={handleChange} style={{ padding: '8px', fontSize: '16px', borderRadius: '5px', border: '1px solid #ccc', width: '100%', boxSizing: 'border-box', marginTop: '8px', marginBottom: '16px' }} />
+</form>
+                  </Modal.Body>
+                  <Modal.Footer>
+                   
+                    <Button variant="danger" onClick={()=>{
+                      if(formData.password===formData.cpassword)
+                      {
+                        handleSubmit();
+                      }
+                      else
+                      {
+                        document.getElementById("error").innerHTML="Password and Confirm Password doesn't match";
+                        setFormData({
+                          password:"",
+                          cpassword:""
+                        })
+                      }
+                    }}>
+                      Submit
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+ 
+      </div>
+     </div>
      <div className='row'>
       <div className='col-md-10' style={{width:'86vw',marginLeft:'8%'}}>
         <div className='row' style={{marginTop:'1%',boxShadow:'5px 5px 4px' ,border:'1px solid black'}}>

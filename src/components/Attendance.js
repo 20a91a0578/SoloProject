@@ -49,6 +49,14 @@ function Attendance() {
  setabs(res);
  handleShow();
  }
+
+ const sendmails=async()=>{
+  const result=await fetch('http://localhost:8009/send-emails',{
+    method:'GET'
+  })
+  console.log(result);
+ }
+
  const print=()=>{
   const table = document.getElementById('abs');
 
@@ -63,6 +71,7 @@ html2canvas(table).then((canvas) => {
 
   // Save the PDF
   doc.save('Absentesslist.pdf');
+  sendmails();
   handleClose();
 });
  }
