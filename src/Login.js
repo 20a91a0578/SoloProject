@@ -30,8 +30,10 @@ function Login() {
       };
     
       const formContainer = {
-        backgroundColor: "white",
+        backgroundColor: "#E4A96A ",
         padding: "50px",
+        boxShadow:"5px 5px 4px"
+       
       };
     
     const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
@@ -139,8 +141,8 @@ function Login() {
       // If the user is not logged in, render the login form
       return (
       
-<div className='row login'>
-    <div className='col-md-6 offset-md-3'>
+<div className='row login' style={{height:'100vh'}} >
+    <div className='col-md-6 offset-md-3' style={{marginTop:'2%',marginBottom:'2'}}>
        
     <div style={formContainer}>
       <form onSubmit={(e)=>{
@@ -171,7 +173,7 @@ function Login() {
             />
           </div><br/>
           <div className='row' style={{marginTop:'1%'}}>
-      <div  className='col-md-'>
+      <div>
        
         <Button style={{color:'blue',backgroundColor:'white',border:'0px solid white'}} onClick={handleShow}>Forgot Password ?</Button>
      <Modal show={show} onHide={handleClose}>
