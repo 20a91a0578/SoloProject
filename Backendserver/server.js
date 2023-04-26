@@ -39,6 +39,7 @@ data.find({role:'student'}).then((result)=>{
 students=result;
    
 })
+
 //sending messages
 
 server.get('/send-emails', async (req, res) => {
@@ -89,6 +90,7 @@ server.get('/finalabsent',(req,res)=>{
 server.get('/getabsents',(req,res)=>{
     const date = new Date()
     let d=db.get('Data');
+    console.log(students);
     d.find({date:date.toLocaleDateString()}).then((result)=>{
         if(result.length===0)
         {
