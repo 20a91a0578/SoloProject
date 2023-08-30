@@ -28,7 +28,7 @@ function Footer() {
         </div>
      
           <div className='col-md-4 offset-md-5'>
-            <h3>Follow us on :  <FaFacebookF/> &nbsp;<FaInstagramSquare/>&nbsp;<FaTwitter/></h3>
+            <h3>Follow us on :  <FaFacebookF/> &nbsp;<FaInstagramSquare/>&nbsp; &nbsp;<FaTwitter/></h3>
     
         </div>
     </div>

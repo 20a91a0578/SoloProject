@@ -3,6 +3,8 @@ import { useState,useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Header from '../Header';
+import Footer from '../Footer';
 function Rows(props){
   return(
     <>
@@ -19,7 +21,7 @@ function Rows(props){
 }
 function Dash() {
   const props={
-    username:"RajeshEevana"
+    username:localStorage.getItem('username')
   }
   const [show, setShow] = useState(false);
 
@@ -38,10 +40,22 @@ function Dash() {
 	const handleChange = (event) => {
 		setFormData({ ...formData, [event.target.name]: event.target.value });
 	};
+  async function handleRetake(){
+    var a=prompt("If you want to take the Attendance\n Type YES to Retake ");
+    if(a==='YES'||a==='yes')
+    {
+      const resp=await fetch('http://localhost:8006/retake',{
+        method:'GET',
+      })
+      const ro=await resp.json();
+      console.log(ro);
+    }
+    
 
+  }
 	const handleSubmit = async() => {
     handleClose();
-const respon= await fetch('http://localhost:8009/updatepassword',{
+const respon= await fetch('http://localhost:8006/updatepassword',{
   method:'POST',
   body:JSON.stringify(formData),
   headers:{
@@ -56,7 +70,7 @@ console.log(respon);
   const [total,settotal]=useState('');
   const [present,setpresent]=useState('');
   const getCount=async()=>{
-const result=await fetch('http://localhost:8009/count',{
+const result=await fetch('http://localhost:8006/count',{
   method:"GET"
 })
 const cou=await result.json();
@@ -64,7 +78,7 @@ settotal(cou.total)
 setpresent(cou.presents)
   }
   const getStudents=async()=>{
-    const result=await fetch('http://localhost:8009/getabsents',{
+    const result=await fetch('http://localhost:8006/getabsents',{
       method:"GET"
     })
     const res=await result.json();
@@ -77,11 +91,11 @@ setpresent(cou.presents)
   },[])
   return (
  <>
-
+<Header username={props.username}/>
     <div>
     <div className='row' style={{marginTop:'1%'}}>
       <div  className='col-md-2 offset-md-10'>
-       
+      <button className='btn btn-danger' style={{marginBottom:'4%'}} onClick={handleRetake}>Retake</button>
         <Button variant="danger" style={{float:'right',fontSize:'15px'}} onClick={handleShow}>Change Password</Button>
      <Modal show={show} onHide={handleClose}>
                   <Modal.Header closeButton>
@@ -161,7 +175,8 @@ setpresent(cou.presents)
       </div>
      </div>
     </div>
-  
+    
+  <Footer/>
  </>
   )
 }

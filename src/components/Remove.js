@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState,useEffect } from 'react';
 import { Table } from 'react-bootstrap';
+import Header from '../Header';
+import Footer from '../Footer';
 function Rows(props){
   return(
     <>
@@ -15,12 +17,16 @@ function Rows(props){
     </>
   )
 }
+
 function Remove() {
+  const props={
+    username:localStorage.getItem('username')
+  }
   const [rollnum,setrollnum]=useState({});
   const [students,setStudents]=useState([]);
  const handleSubmit=async()=>{
   console.log(JSON.stringify(rollnum));
-const result=await fetch('http://localhost:8009/deleteStudents',{
+const result=await fetch('http://localhost:8006/deleteStudents',{
   method:'POST',
   body:JSON.stringify(rollnum),
   headers:{
@@ -30,7 +36,7 @@ const result=await fetch('http://localhost:8009/deleteStudents',{
 console.log(result);
 }
  const getsutdent=async()=>{
-  const result=await fetch('http://localhost:8009/getstudents',{
+  const result=await fetch('http://localhost:8006/getstudents',{
     method:'GET'
   })
   const student=await result.json();
@@ -43,11 +49,10 @@ console.log(result);
 
   return (
 <>
+<Header username={props.username}/>
     <div className='row'>
-     <div className='row' style={{marginTop:'1%'}}>
-      
-     </div>
-     <div className='row' style={{marginTop:'1%',marginLeft:'4%',boxShadow:'5px 5px 4px',width:'94vw'}}>
+   
+     <div className='row' style={{marginTop:'1%',marginLeft:'4%',boxShadow:'5px 5px 4px',width:'94vw',borderRadius:'10px'}}>
      <h3>Enter the Student Roll  Number you want to remove:</h3>
 
      <br/>
@@ -57,6 +62,7 @@ console.log(result);
      <div className='row'>
      <div className='col-md-1 offset-md-11'>
      <br/>
+     
      <button className='btn btn-danger' style={{marginBottom:'4%'}} onClick={handleSubmit}>Remove</button>
     
      </div>
@@ -64,7 +70,7 @@ console.log(result);
      
      </div>
     
-     <div className='cold-md-12'  style={{marginTop:'1%',boxShadow:'5px 5px 4px',width:'94vw',marginLeft:'4%',border:'1px solid black'}}>
+     <div className='cold-md-12'  style={{marginTop:'1%',boxShadow:'5px 5px 4px',width:'94vw',marginLeft:'4%',border:'1px solid black',borderRadius:'5px'}}>
       <div className='row'>
         <div className='col-md-3'><h3>Student's Details:</h3></div>
         <div className='col-md-3 offset-md-6'><h3>Count:{students.length} </h3></div>
@@ -96,6 +102,7 @@ console.log(result);
             </div>
       </div>
     </div>
+    <Footer/>
 </>
   )
 }

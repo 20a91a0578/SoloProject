@@ -1,27 +1,22 @@
 import React from 'react';
+import Header from '../Header';
+import Footer from '../Footer';
+
 import { useState } from 'react';
 function AddUpdate() {
-  const [formData, setFormData] = useState({
-		name: '',
-		rollnumber: '',
-		email: '',
-		branch: '',
-		college: '',
-		backlog: '',
-		cgpa: '',
-		dob: '',
-		academicyear: '',
-		address: '',
-		mobile:''
-	});
+	const props={
+username:localStorage.getItem('username')
+	}
+  const [formData, setFormData] = useState({});
 
 	const handleChange = (event) => {
 		setFormData({ ...formData, [event.target.name]: event.target.value });
+		console.log(formData);
 	};
 
 	const handleSubmit = async(event) => {
 		event.preventDefault();
-		const result=await fetch('http://localhost:8009/addupdate',{
+		const result=await fetch('http://localhost:8006/addupdate',{
 			method:'POST',
 			body:JSON.stringify(formData),
 			headers:{
@@ -32,6 +27,7 @@ function AddUpdate() {
 	};
 
 	return (
+	<><Header username={props.username}/>
 		<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'Arial, sans-serif' }}>
 			<h1>Add Student Information Form</h1>
 			<form style={{ maxWidth: '500px', width: '100%' }} onSubmit={handleSubmit}>
@@ -104,6 +100,8 @@ function AddUpdate() {
 			<button type="submit" style={{ padding: '8px', fontSize: '16px', borderRadius: '5px', border: 'none', backgroundColor: '#4CAF50', color: 'white', width: '100%', cursor: 'pointer', marginTop: '16px', marginBottom: '8px' }}>Add/Update</button>
 </form>
 </div>
+<Footer/>
+	</>
 );
 }
 

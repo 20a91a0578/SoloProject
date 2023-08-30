@@ -8,7 +8,12 @@ const { CourierClient } = require('@trycourier/courier');
 const port=8009;
 const server=express();
 server.use(cors());
+const login=(req,res,next)=>{
+    console.log(`${req.method}`);
+    next();
+}
 server.use(express.json());
+server.use(login);
 const courier = CourierClient({ authorizationToken:authorizationToken});
 const SendEmail = async (email, rollno,body) => {
     const { requestId } = await courier.send({
@@ -108,7 +113,7 @@ server.get('/getabsents',(req,res)=>{
         })
         }
     })  
-})
+});
 
 //to add the students into the database
 server.post('/addupdate',(req,res)=>{
@@ -185,7 +190,19 @@ server.get('/userstat/:id',(req,res)=>{
     res.send(result);
     })
 })
-
-server.listen(8009,()=>{
+//to remove present day's attendance
+server.get('/retake',(req,res)=>{
+    const date=new Date().toLocaleDateString();
+    const data=db.get('Data');
+    data.remove({date:date}).then((resu)=>{
+    const date = new Date()
+    let d=db.get('Data');
+    students.forEach(element => {
+        d.insert({date:date.toLocaleDateString(),name:element.name,rollnumber:element.rollnumber,email:element.email,branch:element.branch,college:element.college,status:'Absent'})
+        });
+    res.send(resu);
+    });
+})
+server.listen(8006,()=>{
     console.log(`server is runnig on the port number ${port} ....`);
 })

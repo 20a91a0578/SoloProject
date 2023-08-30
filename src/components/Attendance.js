@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { Table } from 'react-bootstrap';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import Header from '../Header';
+import Footer from '../Footer';
 const Rows=(props)=>{
   return(
     <>
@@ -20,7 +22,9 @@ const Rows=(props)=>{
 }
 function Attendance() {
   const [show, setShow] = useState(false);
-
+const props={
+  username:localStorage.getItem('username')
+}
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
  const [rollnum,setrollnum]=useState('');
@@ -34,7 +38,7 @@ function Attendance() {
  const [absentss,setabs]=useState([]);
  const handleSubmit=async()=>{
   console.log(rollnum)
-  const result = await fetch('http://localhost:8009/details/'+rollnum,{
+  const result = await fetch('http://localhost:8006/details/'+rollnum,{
     method:"GET"
   })
   const rt=await result.json();
@@ -42,7 +46,7 @@ function Attendance() {
   console.log(rt);
  }
  const handleClos=async()=>{
- const result=await fetch('http://localhost:8009/finalabsent',{
+ const result=await fetch('http://localhost:8006/finalabsent',{
   method:"GET"
  })
  const res=await result.json();
@@ -51,7 +55,7 @@ function Attendance() {
  }
 
  const sendmails=async()=>{
-  const result=await fetch('http://localhost:8009/send-emails',{
+  const result=await fetch('http://localhost:8006/send-emails',{
     method:'GET'
   })
   console.log(result);
@@ -78,11 +82,12 @@ html2canvas(table).then((canvas) => {
 
   return (
 <>
+<Header username={props.username}/>
     <div className='row'>
      <div className='row' style={{marginTop:'1%'}}>
-      <div  className='col-md-1 offset-md-11'>
+      <div  className='col-md-2 offset-md-10'>
         {/* <button className='btn btn-danger' onClick={handleClos}>Close</button> */}
-        <Button variant="danger" style={{float:'right',fontSize:'15px'}} onClick={handleClos}>Close</Button>
+        <Button variant="danger" style={{float:'right',fontSize:'15px'}} onClick={handleClos}>Submit Attendance</Button>
      <Modal show={show} onHide={handleClose}>
                   <Modal.Header closeButton>
                     <Modal.Title>ABSENTE's List</Modal.Title>
@@ -159,6 +164,7 @@ html2canvas(table).then((canvas) => {
       </div>
      </div>
     </div>
+    <Footer/>
 </>
   )
 }

@@ -3,15 +3,17 @@ import {useState } from 'react';
 import { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import Udash from './components/Udash';
-import App from './App';
+import { useNavigate } from 'react-router-dom';
 import './index.css';
 function Login() {
+const navig=useNavigate();
 
     const labelStyle = {
         display: "block",
         marginBottom: "5px",
         fontWeight: "bold",
+        color:"white",
+        opacity:"1"
       };
     
       const inputStyle = {
@@ -20,6 +22,7 @@ function Login() {
         borderRadius: "5px",
         marginBottom: "15px",
         width: "100%",
+        backgroundColor:"white"
       };
       const inputContainer = {
         width: "100%",
@@ -30,10 +33,11 @@ function Login() {
       };
     
       const formContainer = {
-        backgroundColor: "#E4A96A ",
+        backgroundColor: "#8a6e86",
         padding: "50px",
-        boxShadow:"5px 5px 4px"
-       
+        opacity:"0.5",
+    borderRadius:" 10px",
+    boxShadow:"5px 5px 5px"      
       };
     
     const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
@@ -47,9 +51,7 @@ function Login() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    // function reload(){
-    //   window.location.reload();
-    // }
+  
     const [formData, setFormData] = useState({
     email:'' 
     });
@@ -61,7 +63,7 @@ function Login() {
     const handleSubmit = async() => {
      document.getElementById("error1").innerHTML="if you don't find your mail in the inbox.Please check it in junk/spam mails." ;
      setTimeout(handleClose,4000);
-  const respon= await fetch('http://localhost:8009/sendpassword',{
+  const respon= await fetch('http://localhost:8006/sendpassword',{
     method:'POST',
     body:JSON.stringify(formData),
     headers:{
@@ -74,21 +76,24 @@ function Login() {
     };
     const handelUsername = (e) => {
       setUsername(e.target.value);
+      // console.log(username)
     }
   
     const handelPassword = (e) => {
       setPassword(e.target.value);
+      // console.log(roll)
     }
   
     //fetching data from  database to the front end.
     const getUsers = async () => {
       try {
-        const response = await fetch('http://localhost:8009', {
+        const response = await fetch('http://localhost:8006', {
           method: 'GET'
         });
         const result = await response.json();
      
       setUsers(result);
+      console.log(users);
      
     
        
@@ -115,10 +120,12 @@ function Login() {
       setRoll(user.roll);
       
      if (user.role==='admin') {
+      localStorage.setItem('username',user.username)
         setIsAdminLoggedIn(true);
       }
        else if(user.role==='user')
       {
+        localStorage.setItem('username',user.username)
         setIsUserLoggedIn(true);
       } 
       }
@@ -131,11 +138,11 @@ function Login() {
     if (isAdminLoggedIn) {
       // If the user is logged in, render the authenticated content
      
-      return (<App username={loginname} roll={roll}/>);
+     navig('/dashboard');
     }
     else if(isUserLoggedIn){
       
-      return(<Udash username={loginname} roll={roll}/>)
+      navig('/udashboard');
     } 
     else {
       // If the user is not logged in, render the login form
@@ -154,10 +161,7 @@ function Login() {
         < span id='error' style={{color:'red'}}></span>
           <div style={inputContainer}>
             <label style={labelStyle}>User Name:</label>
-            <input
-              type="text"
-              name="username"
-              value={username}
+            <input type="text"name="username" value={username}
               onChange={handelUsername}
               style={inputStyle}
             />

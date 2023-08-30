@@ -3,15 +3,19 @@ import { Table } from 'react-bootstrap';
 import { useState,useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useNavigate } from 'react-router-dom';
 import { FaMapMarkerAlt,FaFacebookF,FaInstagramSquare,FaTwitter} from 'react-icons/fa';
-function Udash(props) {
- 
+function Udash() {
+ const props={
+  username:localStorage.getItem('username')
+ }
+ const navig=useNavigate();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   function reload(){
-    window.location.reload();
+    navig('/');
   }
   const [formData, setFormData] = useState({
     username:props.username,
@@ -26,7 +30,7 @@ function Udash(props) {
 
 	const handleSubmit = async() => {
     handleClose();
-const respon= await fetch('http://localhost:8009/updatepassword',{
+const respon= await fetch('http://localhost:8006/updatepassword',{
   method:'POST',
   body:JSON.stringify(formData),
   headers:{
@@ -42,7 +46,7 @@ console.log(respon);
   const [stat,setStat]=useState('Absent');
   let [atten,setatten]=useState(0);
   const getuserstat=async()=>{
-    const result=await fetch('http://localhost:8009/userstat/'+props.username,{
+    const result=await fetch('http://localhost:8006/userstat/'+props.username,{
       method:"GET",
     })
     let date=new Date().toLocaleDateString();
@@ -65,7 +69,7 @@ console.log(respon);
   }
   
   const getuser=async()=>{
-    const result=await fetch('http://localhost:8009/user/'+props.username,{
+    const result=await fetch('http://localhost:8006/user/'+props.username,{
       method:"GET"
     })
     const rk=await result.json();
@@ -76,7 +80,7 @@ console.log(respon);
     getuser()
     getuserstat()
    
-  },[])
+  })
   return (
    <>
    <div style={{ backgroundColor: '#495788', color: 'white', justifyContent: 'space-between', alignItems: 'center', padding: '10px' }}>

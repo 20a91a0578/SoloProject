@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { FiLogOut } from "react-icons/fi";
+import { useNavigate } from 'react-router-dom';
 function Header(props) {
+  const navig=useNavigate();
   function reload(){
-    window.location.reload();
+  navig('/')
   }
   return (
    <>
