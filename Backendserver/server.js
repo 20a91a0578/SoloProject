@@ -125,6 +125,7 @@ server.post('/addupdate',(req,res)=>{
 })
 
 //get student details from the data  base
+
 server.get('/getstudents',(req,res)=>{
     const data=db.get('Data');
     data.find({role:"student"}).then((result)=>res.send(result));
@@ -133,9 +134,8 @@ server.get('/getstudents',(req,res)=>{
 //to delete student from database
 server.post('/deleteStudents',(req,res)=>{
     const data=db.get('Data');
-    data.remove({rollnumber:req.body.rollnum,role:'student'}).then((result)=>{
-    console.log(result)
-    })
+    data.update({rollnumer:req.body.rollnum},{$set:{reason:req.body.reason,role:'removed'}});
+    
 })
 
 //to post Attendance

@@ -48,7 +48,7 @@ function Dash() {
         method:'GET',
       })
       const ro=await resp.json();
-      console.log(ro);
+    
     }
     
 
@@ -62,7 +62,7 @@ const respon= await fetch('http://localhost:8006/updatepassword',{
     "Content-Type":"application/json"
   }
 });
-console.log(respon);
+
 
 	};
   

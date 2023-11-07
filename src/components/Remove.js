@@ -25,10 +25,20 @@ function Remove() {
   const [rollnum,setrollnum]=useState({});
   const [students,setStudents]=useState([]);
  const handleSubmit=async()=>{
-  console.log(JSON.stringify(rollnum));
+
+  var reason=prompt("Enter the reason for removal of the student")
+  var na=rollnum["rollnum"];
+  if(reason===""){
+    handleSubmit();
+  }
+  else
+{
+  var res={rollnum:na,reason:reason};
+  console.log(res);
+}
 const result=await fetch('http://localhost:8006/deleteStudents',{
   method:'POST',
-  body:JSON.stringify(rollnum),
+  body:JSON.stringify(res),
   headers:{
     "Content-Type":"application/json"
   }
